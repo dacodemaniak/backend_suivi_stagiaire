@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aelion.suivi.entities.POEEntity;
 import com.aelion.suivi.services.POEService;
+import com.aelion.suivi.services.exception.NotFoundException;
 
 /**
  * @author Aelion
@@ -37,14 +38,14 @@ public class POEController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> findOne(@PathVariable int id) {
+	public ResponseEntity<?> findOne(@PathVariable int id) throws Exception {
 		try {
 			return ResponseEntity.ok(this.service.getOne((long) id));
-		} catch (Exception e) {
+		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
 			//return ResponseEntity.notFound().build();
-			ResponseEntity<String> response = new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-			return response;
+			
+			return e.send();
 		}
 	}
 	

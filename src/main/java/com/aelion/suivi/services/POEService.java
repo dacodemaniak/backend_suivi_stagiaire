@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.aelion.suivi.entities.POEEntity;
 import com.aelion.suivi.repositories.POERepository;
+import com.aelion.suivi.services.exception.NotFoundException;
 
 /**
  * @author Aelion
@@ -80,9 +81,9 @@ public class POEService implements ICrud<POEEntity> {
 		
 		if (oEntity.isPresent()) {
 			return oEntity.get();
+		} else {
+			throw new NotFoundException("the POE with " + id + " not found");	
 		}
-		
-		throw new Exception("the POE with " + id + " not found");
 	}
 
 }
