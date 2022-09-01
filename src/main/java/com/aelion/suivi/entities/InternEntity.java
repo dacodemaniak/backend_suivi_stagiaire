@@ -5,6 +5,7 @@ package com.aelion.suivi.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class InternEntity {
 	private String firstName;
 	private Date birthDate;
 	private String phoneNumber;
+	@Column(unique=true)
 	private String email;
 	private String address;
 	

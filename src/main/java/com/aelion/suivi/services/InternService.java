@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aelion.suivi.dto.InternShortListDto;
 import com.aelion.suivi.entities.InternEntity;
 import com.aelion.suivi.repositories.FakeInternRepository;
 import com.aelion.suivi.repositories.InternRepository;
@@ -71,7 +72,34 @@ public class InternService implements ICrud<InternEntity> {
 		}
 		return alInterns;
 	}
+	
+	/**
+	 * 
+	 * @return A List of InternShortListDto objects
+	 */
+	public List<InternShortListDto> shortList() {
+		ArrayList<InternEntity> itEntity = (ArrayList<InternEntity>) this.repository.findAll();
+		
+		// Need to map InternEntity to InternShortListDto
+		ArrayList<InternShortListDto> dto = new ArrayList<>();
+		
+		for(InternEntity entity : itEntity) {
+			InternShortListDto transformed = new InternShortListDto();
+			dto.add(transformed.map(entity));
+		}
+		
+		return dto;
+		/**
+		 * for (const entity: InternEntity of itEntity)
+		 */
+	}
 
+	public Iterable<InternEntity> internsAsIterable() {
+		Iterable<InternEntity> itEntities =  this.repository.findAll();
+		
+		return itEntities;
+	}
+	
 	@Override
 	public Optional<InternEntity> findOne(Long id) {
 		// TODO Auto-generated method stub
@@ -86,6 +114,10 @@ public class InternService implements ICrud<InternEntity> {
 	@Override
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
+	}
+	
+	public List<InternEntity> findByName(String name) {
+		return this.repository.findByName(name);
 	}
 
 }

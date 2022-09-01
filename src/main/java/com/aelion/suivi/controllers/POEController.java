@@ -37,6 +37,7 @@ public class POEController {
 		return this.service.findAll();
 	}
 	
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findOne(@PathVariable int id) throws Exception {
 		try {
