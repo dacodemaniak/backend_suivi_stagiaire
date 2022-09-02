@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aelion.suivi.dto.InternShortListDto;
@@ -93,5 +94,10 @@ public class InternController {
 	@GetMapping("/byname/{name}")
 	public List<InternEntity> findByName(@PathVariable String name) {
 		return this.internService.findByName(name);
+	}
+	
+	@GetMapping("/byemail")
+	public ResponseEntity<?> byEmail(@RequestParam() String email) {
+		return this.internService.byEmail(email);
 	}
 }
