@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity()
@@ -17,6 +18,10 @@ public class POEEntity {
 	private String name;
 	private Date beginDate;
 	private Date endDate;
+	
+	@ManyToOne()
+	private POETypeEntity poeType;
+	
 	/**
 	 * @return the name
 	 */
@@ -59,6 +64,16 @@ public class POEEntity {
 	public int getId() {
 		return id;
 	}
-	
-	
+	/**
+	 * @return the poeType
+	 */
+	public POETypeEntity getPoeType() {
+		return poeType;
+	}
+	/**
+	 * @param poeType the poeType to set
+	 */
+	public void setPoeType(POETypeEntity poeType) {
+		this.poeType = poeType;
+	}
 }
