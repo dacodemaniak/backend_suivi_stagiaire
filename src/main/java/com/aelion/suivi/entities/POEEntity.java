@@ -1,12 +1,17 @@
 package com.aelion.suivi.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity()
@@ -21,6 +26,9 @@ public class POEEntity {
 	
 	@ManyToOne()
 	private POETypeEntity poeType;
+	
+	@OneToMany(mappedBy="poe", targetEntity=InternToPOEEntity.class, fetch=FetchType.LAZY)
+	private List<InternEntity> interns = new ArrayList<>();
 	
 	/**
 	 * @return the name
@@ -76,4 +84,13 @@ public class POEEntity {
 	public void setPoeType(POETypeEntity poeType) {
 		this.poeType = poeType;
 	}
+	
+	/**
+	 * @return the interns
+	 */
+	public List<InternEntity> getInterns() {
+		return this.interns;
+	}
+	
+	
 }

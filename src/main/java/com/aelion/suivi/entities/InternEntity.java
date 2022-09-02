@@ -3,14 +3,19 @@
  */
 package com.aelion.suivi.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * @author Aélion
@@ -31,6 +36,10 @@ public class InternEntity {
 	@Column(unique=true)
 	private String email;
 	private String address;
+	
+	
+	@OneToMany(mappedBy="intern", targetEntity=InternToPOEEntity.class)
+	private List<POEEntity> poes = new ArrayList<>();
 	
 	/**
 	 * @return the id
@@ -115,6 +124,18 @@ public class InternEntity {
 	 */
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	/**
+	 * @return the poes
+	 */
+	public List<POEEntity> getPoes() {
+		return poes;
+	}
+	/**
+	 * @param poes the poes to set
+	 */
+	public void setPoes(List<POEEntity> poes) {
+		this.poes = poes;
 	}
 	
 	

@@ -3,6 +3,7 @@
  */
 package com.aelion.suivi.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aelion.suivi.dto.POEDto;
+import com.aelion.suivi.entities.InternEntity;
 import com.aelion.suivi.entities.POEEntity;
 import com.aelion.suivi.services.POEService;
 import com.aelion.suivi.services.exception.NotFoundException;
@@ -33,8 +36,19 @@ public class POEController {
 	private POEService service;
 	
 	@GetMapping()
-	public List<POEEntity> findAll() {
-		return this.service.findAll();
+	public List<POEDto> findAll() {
+		List<POEEntity> poes = this.service.findAll();
+		List<POEDto> alDto = new ArrayList<>();
+		
+		for (POEEntity poe : poes) {
+			POEDto dto = new POEDto(poe);
+			for (InternEntity intern : poe.getInterns()) {
+				dto.addIntern(intern);
+			}
+			alDto.add(dto);
+		}
+		
+		return alDto;
 	}
 	
 	

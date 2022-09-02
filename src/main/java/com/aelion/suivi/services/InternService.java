@@ -85,8 +85,8 @@ public class InternService implements ICrud<InternEntity> {
 		ArrayList<InternShortListDto> dto = new ArrayList<>();
 		
 		for(InternEntity entity : itEntity) {
-			InternShortListDto transformed = new InternShortListDto();
-			dto.add(transformed.map(entity));
+			InternShortListDto transformed = new InternShortListDto(entity);
+			dto.add(transformed);
 		}
 		
 		return dto;
