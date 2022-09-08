@@ -16,6 +16,7 @@ import com.aelion.suivi.dto.InternShortListDto;
 import com.aelion.suivi.entities.InternEntity;
 import com.aelion.suivi.repositories.FakeInternRepository;
 import com.aelion.suivi.repositories.InternRepository;
+import com.aelion.suivi.services.exception.NotPermittedException;
 
 
 /**
@@ -113,8 +114,13 @@ public class InternService implements ICrud<InternEntity> {
 	}
 
 	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
+	public ResponseEntity<?> delete(Long id) throws NotPermittedException {
+		try {
+			this.repository.deleteById(id);
+			return ResponseEntity.noContent().build();
+		} catch(Exception e) {
+			throw new NotPermittedException("Intern with id : " + id + " cannot be deleted");
+		}
 	}
 	
 	public List<InternEntity> findByName(String name) {

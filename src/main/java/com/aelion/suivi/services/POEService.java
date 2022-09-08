@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.aelion.suivi.entities.POEEntity;
@@ -47,20 +48,8 @@ public class POEService implements ICrud<POEEntity> {
 	}
 	
 	@Override
-	public void delete(Long id) throws Exception {
-		Optional<POEEntity> oEntity = this.findOne(id);
-		
-		if (oEntity.isPresent()) {
-			try {
-				this.repository.deleteById(id.intValue());
-			} catch(IllegalArgumentException e) {
-				throw new IllegalArgumentException();
-			}
-		} else {
-			throw new Exception("POE with id : " + id + " was not found!");
-		}
-		
-		
+	public ResponseEntity<?> delete(Long id) throws Exception {
+		return null;
 	}
 
 	@Override

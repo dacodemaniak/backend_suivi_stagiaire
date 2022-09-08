@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aelion.suivi.dto.InternShortListDto;
 import com.aelion.suivi.entities.InternEntity;
 import com.aelion.suivi.services.InternService;
+import com.aelion.suivi.services.exception.NotPermittedException;
 
 /**
  * @author Aelion
@@ -78,11 +79,16 @@ public class InternController {
 		return this.internService.add(intern);
 	}
 	
-	@DeleteMapping()
+	@DeleteMapping("/{id}")
 	@CrossOrigin
-	public ResponseEntity<Object> delete(@RequestBody InternEntity intern) {
-		this.internService.delete(intern);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<?> delete(@PathVariable Long id) {
+		try {
+			this.internService.delete(id);
+		} catch (NotPermittedException e) {
+			System.out.println("Never");
+		} finally {
+			return ResponseEntity.noContent().build();
+		}
 	}
 	
 	@PutMapping()
