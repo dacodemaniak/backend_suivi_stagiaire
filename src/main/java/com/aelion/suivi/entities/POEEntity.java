@@ -27,8 +27,8 @@ public class POEEntity {
 	@ManyToOne()
 	private POETypeEntity poeType;
 	
-	@OneToMany(mappedBy="poe", targetEntity=InternToPOEEntity.class, fetch=FetchType.LAZY)
-	private List<InternEntity> interns = new ArrayList<>();
+	@OneToMany(mappedBy="intern", targetEntity=InternToPOEEntity.class)
+	private List<InternToPOEEntity> internsToPOE = new ArrayList<>();
 	
 	/**
 	 * @return the name
@@ -88,8 +88,8 @@ public class POEEntity {
 	/**
 	 * @return the interns
 	 */
-	public List<InternEntity> getInterns() {
-		return this.interns;
+	public List<InternToPOEEntity> getInternsToPOE() {
+		return this.internsToPOE;
 	}
 	
 	

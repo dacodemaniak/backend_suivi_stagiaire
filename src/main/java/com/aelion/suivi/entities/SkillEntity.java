@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.aelion.suivi.entities;
 
 import java.util.ArrayList;
@@ -8,46 +5,45 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- * @author Aelion
- *
- */
 @Entity
-@Table(name="poe_type")
-public class POETypeEntity {
+@Table(name="skill")
+public class SkillEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
-	@Column(length=50)
+	@Column(unique=true, nullable=false, length=150)
 	private String title;
 	
-	/**
-	 * @return the title
-	 */
+	private String description;
+
+	@OneToMany(mappedBy="skill")
+	private List<InternEvaluationEntity> evaluations = new ArrayList<>();
+	
+	
 	public String getTitle() {
 		return title;
 	}
 
-	/**
-	 * @param title the title to set
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
+	public String getDescription() {
+		return description;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Long getId() {
+		return id;
+	}
 }

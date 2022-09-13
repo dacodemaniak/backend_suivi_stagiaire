@@ -37,18 +37,7 @@ public class POEController {
 	
 	@GetMapping()
 	public List<POEDto> findAll() {
-		List<POEEntity> poes = this.service.findAll();
-		List<POEDto> alDto = new ArrayList<>();
-		
-		for (POEEntity poe : poes) {
-			POEDto dto = new POEDto(poe);
-			for (InternEntity intern : poe.getInterns()) {
-				dto.addIntern(intern);
-			}
-			alDto.add(dto);
-		}
-		
-		return alDto;
+		return this.service.fullPOE();
 	}
 	
 	

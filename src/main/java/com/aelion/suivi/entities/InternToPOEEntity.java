@@ -7,9 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name="interns_to_poes")
@@ -18,11 +15,11 @@ public class InternToPOEEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=InternEntity.class)
 	private InternEntity intern;
 	
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=POEEntity.class)
 	private POEEntity poe;
 
 	/**

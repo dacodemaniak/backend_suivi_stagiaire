@@ -1,5 +1,6 @@
 package com.aelion.suivi.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,11 +22,10 @@ public class POEDto extends DtoMapper {
 	@Map()
 	public Date endDate;
 	
-	public List<InternEntity> interns;
+	public List<InternEntity> interns = new ArrayList<>();
 	
 	public POEDto(POEEntity entity) {
 		this.entity = entity;
-		this.map(this, entity);
 	}
 	
 	public void addIntern(InternEntity intern) {

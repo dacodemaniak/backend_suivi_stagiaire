@@ -15,8 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 /**
  * @author Aélion
  * POJO : Plain Old Java Object
@@ -33,12 +31,24 @@ public class InternEntity {
 	private String firstName;
 	private Date birthDate;
 	private String phoneNumber;
-	@Column(unique=true)
+	@Column(unique=true, nullable=false)
 	private String email;
 	private String address;
 	
+	@OneToMany(mappedBy="intern") // intern attribute of InternEvaluation class
+	private List<InternEvaluationEntity> evaluations = new ArrayList<>();
 	
-	@OneToMany(mappedBy="intern", targetEntity=InternToPOEEntity.class)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@OneToMany(mappedBy="poe", targetEntity=InternToPOEEntity.class)
 	private List<POEEntity> poes = new ArrayList<>();
 	
 	/**
