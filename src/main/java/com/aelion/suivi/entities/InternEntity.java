@@ -41,15 +41,7 @@ public class InternEntity {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	@OneToMany(mappedBy="poe", targetEntity=InternToPOEEntity.class)
-	private List<POEEntity> poes = new ArrayList<>();
+
 	
 	/**
 	 * @return the id
@@ -135,18 +127,5 @@ public class InternEntity {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	/**
-	 * @return the poes
-	 */
-	public List<POEEntity> getPoes() {
-		return poes;
-	}
-	/**
-	 * @param poes the poes to set
-	 */
-	public void setPoes(List<POEEntity> poes) {
-		this.poes = poes;
-	}
-	
 	
 }

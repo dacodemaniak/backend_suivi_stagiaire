@@ -9,10 +9,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 @Entity()
 @Table(name="poe")
@@ -27,8 +29,14 @@ public class POEEntity {
 	@ManyToOne()
 	private POETypeEntity poeType;
 	
-	@OneToMany(mappedBy="intern", targetEntity=InternToPOEEntity.class)
-	private List<InternToPOEEntity> internsToPOE = new ArrayList<>();
+
+	@ManyToMany()
+	@JoinTable(
+			name="interns_to_poes",
+			joinColumns=@JoinColumn(name="poe_id"), // FK
+			inverseJoinColumns=@JoinColumn(name="intern_id") // FK
+	)
+	private List<InternEntity> interns = new ArrayList<>();
 	
 	/**
 	 * @return the name
@@ -88,9 +96,7 @@ public class POEEntity {
 	/**
 	 * @return the interns
 	 */
-	public List<InternToPOEEntity> getInternsToPOE() {
-		return this.internsToPOE;
+	public List<InternEntity> getInterns() {
+		return this.interns;
 	}
-	
-	
 }
