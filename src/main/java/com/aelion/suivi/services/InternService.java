@@ -113,7 +113,7 @@ public class InternService implements ICrud<InternEntity> {
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
+
 	}
 	
 	public List<InternEntity> findByName(String name) {
