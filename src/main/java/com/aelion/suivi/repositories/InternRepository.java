@@ -2,9 +2,11 @@ package com.aelion.suivi.repositories;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aelion.suivi.entities.InternEntity;
 
@@ -46,5 +48,12 @@ public interface InternRepository extends CrudRepository<InternEntity, Long> {
 	@Query(value="SELECT * FROM intern WHERE email = :email", nativeQuery=true)
 	public InternEntity nativeInternByMail(@Param("email") String email);
 	
+	@Modifying
+	@Transactional
+	@Query(
+			value="DELETE FROM interns_to_poes itp WHERE itp.intern_id = :id",
+			nativeQuery = true
+	)
+	public void removeFromPOE(@Param("id") Long id);
 
 }

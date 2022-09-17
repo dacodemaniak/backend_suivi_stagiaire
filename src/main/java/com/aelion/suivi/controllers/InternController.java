@@ -85,6 +85,13 @@ public class InternController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@DeleteMapping("/{id}")
+	@CrossOrigin
+	public ResponseEntity<Object> deleteById(@PathVariable() Long id) {
+		this.internService.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+	
 	@PutMapping()
 	public ResponseEntity<?> update(@RequestBody InternEntity intern) {
 		this.internService.update(intern);

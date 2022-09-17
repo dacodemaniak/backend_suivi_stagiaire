@@ -35,9 +35,10 @@ public class POEController {
 	@Autowired
 	private POEService service;
 	
+	
 	@GetMapping()
-	public List<POEDto> findAll() {
-		return this.service.fullPOE();
+	public List<POEEntity> findAll() {
+		return this.service.findAll();
 	}
 	
 	

@@ -114,7 +114,8 @@ public class InternService implements ICrud<InternEntity> {
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
+		this.repository.removeFromPOE(id);
+		this.repository.deleteById(id);
 	}
 	
 	public List<InternEntity> findByName(String name) {

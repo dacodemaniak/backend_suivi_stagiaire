@@ -23,9 +23,6 @@ public class SkillEntity {
 	
 	private String description;
 
-	@OneToMany(mappedBy="skill")
-	private List<InternEvaluationEntity> evaluations = new ArrayList<>();
-	
 	
 	public String getTitle() {
 		return title;
