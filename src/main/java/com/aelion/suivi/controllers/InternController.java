@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aelion.suivi.dto.InternInputDto;
 import com.aelion.suivi.dto.InternShortListDto;
 import com.aelion.suivi.entities.InternEntity;
 import com.aelion.suivi.services.InternService;
@@ -70,12 +71,13 @@ public class InternController {
 	
 	/**
 	 * 
-	 * @param intern
+	 * @param InternInputDto
 	 * @return 201 http-status
 	 */
 	@PostMapping()
-	public InternEntity add(@RequestBody InternEntity intern) {
-		return this.internService.add(intern);
+	@CrossOrigin
+	public InternEntity add(@RequestBody InternInputDto intern) {
+		return this.internService.addInternAndPoes(intern);
 	}
 	
 	@DeleteMapping()

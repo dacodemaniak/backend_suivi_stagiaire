@@ -99,4 +99,8 @@ public class POEEntity {
 	public List<InternEntity> getInterns() {
 		return this.interns;
 	}
+	
+	public void addIntern(InternEntity intern) {
+		this.interns.add(intern);
+	}
 }

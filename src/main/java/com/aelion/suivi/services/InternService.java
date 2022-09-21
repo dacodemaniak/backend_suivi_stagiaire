@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.aelion.suivi.dto.InternInputDto;
 import com.aelion.suivi.dto.InternShortListDto;
 import com.aelion.suivi.entities.InternEntity;
+import com.aelion.suivi.entities.POEEntity;
 import com.aelion.suivi.repositories.FakeInternRepository;
 import com.aelion.suivi.repositories.InternRepository;
+import com.aelion.suivi.repositories.POERepository;
 
 
 /**
@@ -29,6 +32,9 @@ public class InternService implements ICrud<InternEntity> {
 	
 	@Autowired
 	private InternRepository repository;
+	
+	@Autowired
+	private POERepository poeRepository;
 	
 	/**
 	 * INSERT INTO intern (name, firstName, ...., address) VALUES (...);
@@ -45,6 +51,32 @@ public class InternService implements ICrud<InternEntity> {
 		return null;
 	}
 
+	public InternEntity addInternAndPoes(InternInputDto internDto) {
+		InternEntity intern = new InternEntity();
+		intern.setAddress(internDto.address);
+		intern.setBirthDate(internDto.birthDate);
+		intern.setEmail(internDto.email);
+		intern.setFirstName(internDto.firstName);
+		intern.setName(internDto.name);
+		intern.setPhoneNumber(internDto.phoneNumber);
+		
+		// Persists intern
+		this.repository.save(intern);
+		
+		// Persists POEs with the new Intern
+		internDto.poes.forEach(inputPoe -> {
+			Optional<POEEntity> oPoe = this.poeRepository.findById(inputPoe.getId());
+			if (oPoe.isPresent()) {
+				POEEntity poe = oPoe.get();
+				
+				poe.addIntern(intern);
+				
+				this.poeRepository.save(poe);
+			}
+		});
+		return intern;
+	}
+	
 	@Override
 	public void update(InternEntity t) {
 		this.repository.save(t);
