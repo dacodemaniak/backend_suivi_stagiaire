@@ -76,8 +76,8 @@ public class InternController {
 	 */
 	@PostMapping()
 	@CrossOrigin
-	public InternEntity add(@RequestBody InternInputDto intern) {
-		return this.internService.addInternAndPoes(intern);
+	public InternEntity add(@RequestBody InternEntity intern) {
+		return this.internService.add(intern);
 	}
 	
 	@DeleteMapping()
