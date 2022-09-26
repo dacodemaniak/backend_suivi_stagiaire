@@ -3,18 +3,25 @@
  */
 package com.aelion.suivi.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aelion.suivi.dto.POEDto;
+import com.aelion.suivi.entities.InternEntity;
 import com.aelion.suivi.entities.POEEntity;
 import com.aelion.suivi.repositories.POERepository;
 import com.aelion.suivi.services.exception.NotFoundException;
 
 /**
  * @author Aelion
+ *
+ */
+/**
+ * @author jlaubert
  *
  */
 @Service
@@ -69,6 +76,23 @@ public class POEService implements ICrud<POEEntity> {
 		return (List<POEEntity>) this.repository.findAll();
 	}
 
+//	public List<POEDto> fullPOE() {
+//		List<POEEntity> poes = this.findAll();
+//		List<POEDto> alDto = new ArrayList<>();
+//		
+//		for (POEEntity poe : poes) {
+//			POEDto dto = new POEDto(poe);
+//			dto.map(poe, dto);
+//			
+//			for (InternToPOEEntity internToPOE : poe.getInternsToPOE()) {
+//				dto.addIntern(internToPOE.getIntern());
+//			}
+//			alDto.add(dto);
+//		}
+//		
+//		return alDto;
+//	}
+	
 	@Override
 	public Optional<POEEntity> findOne(Long id) {
 		// TODO Auto-generated method stub

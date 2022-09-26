@@ -9,12 +9,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.aelion.suivi.dto.InternInputDto;
 import com.aelion.suivi.dto.InternShortListDto;
 import com.aelion.suivi.entities.InternEntity;
+import com.aelion.suivi.entities.POEEntity;
 import com.aelion.suivi.repositories.FakeInternRepository;
 import com.aelion.suivi.repositories.InternRepository;
+import com.aelion.suivi.repositories.POERepository;
 
 
 /**
@@ -28,6 +33,9 @@ public class InternService implements ICrud<InternEntity> {
 	
 	@Autowired
 	private InternRepository repository;
+	
+	@Autowired
+	private POERepository poeRepository;
 	
 	/**
 	 * INSERT INTO intern (name, firstName, ...., address) VALUES (...);
@@ -44,6 +52,32 @@ public class InternService implements ICrud<InternEntity> {
 		return null;
 	}
 
+	public InternEntity addInternAndPoes(InternInputDto internDto) {
+		InternEntity intern = new InternEntity();
+		intern.setAddress(internDto.address);
+		intern.setBirthDate(internDto.birthDate);
+		intern.setEmail(internDto.email);
+		intern.setFirstName(internDto.firstName);
+		intern.setName(internDto.name);
+		intern.setPhoneNumber(internDto.phoneNumber);
+		
+		// Persists intern
+		this.repository.save(intern);
+		
+		// Persists POEs with the new Intern
+		internDto.poes.forEach(inputPoe -> {
+			Optional<POEEntity> oPoe = this.poeRepository.findById(inputPoe.getId());
+			if (oPoe.isPresent()) {
+				POEEntity poe = oPoe.get();
+				
+				poe.addIntern(intern);
+				
+				this.poeRepository.save(poe);
+			}
+		});
+		return intern;
+	}
+	
 	@Override
 	public void update(InternEntity t) {
 		this.repository.save(t);
@@ -84,8 +118,8 @@ public class InternService implements ICrud<InternEntity> {
 		ArrayList<InternShortListDto> dto = new ArrayList<>();
 		
 		for(InternEntity entity : itEntity) {
-			InternShortListDto transformed = new InternShortListDto();
-			dto.add(transformed.map(entity));
+			InternShortListDto transformed = new InternShortListDto(entity);
+			dto.add(transformed);
 		}
 		
 		return dto;
@@ -113,11 +147,28 @@ public class InternService implements ICrud<InternEntity> {
 
 	@Override
 	public void delete(Long id) {
-
+		this.repository.removeFromPOE(id);
+		this.repository.deleteById(id);
 	}
 	
 	public List<InternEntity> findByName(String name) {
 		return this.repository.findByName(name);
+	}
+	
+	public ResponseEntity<?> byEmail(String email) {
+		ResponseEntity response = null;
+		
+		InternEntity entity =  this.repository.internByMail(email);
+		
+		if (entity == null) {
+			return new ResponseEntity(HttpStatus.OK);
+		}
+		
+		return new ResponseEntity(HttpStatus.FORBIDDEN);
+	}
+	
+	public boolean emailExists(String email) {
+		return this.repository.internByMail(email) == null ? false : true;
 	}
 
 }

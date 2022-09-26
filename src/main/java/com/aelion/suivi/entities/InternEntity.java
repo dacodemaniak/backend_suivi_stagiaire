@@ -3,13 +3,16 @@
  */
 package com.aelion.suivi.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,9 +31,17 @@ public class InternEntity {
 	private String firstName;
 	private Date birthDate;
 	private String phoneNumber;
-	@Column(unique=true)
+	@Column(unique=true, nullable=false)
 	private String email;
 	private String address;
+	
+	@OneToMany(mappedBy="intern") // intern attribute of InternEvaluation class
+	private List<InternEvaluationEntity> evaluations = new ArrayList<>();
+	
+	
+	
+	
+
 	
 	/**
 	 * @return the id
@@ -116,6 +127,5 @@ public class InternEntity {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
 	
 }

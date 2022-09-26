@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aelion.suivi.dto.InternInputDto;
 import com.aelion.suivi.dto.InternShortListDto;
 import com.aelion.suivi.entities.InternEntity;
 import com.aelion.suivi.services.InternService;
@@ -69,18 +71,26 @@ public class InternController {
 	
 	/**
 	 * 
-	 * @param intern
+	 * @param InternInputDto
 	 * @return 201 http-status
 	 */
 	@PostMapping()
-	public InternEntity add(@RequestBody InternEntity intern) {
-		return this.internService.add(intern);
+	@CrossOrigin
+	public InternEntity add(@RequestBody InternInputDto intern) {
+		return this.internService.addInternAndPoes(intern);
 	}
 	
 	@DeleteMapping()
 	@CrossOrigin
 	public ResponseEntity<Object> delete(@RequestBody InternEntity intern) {
 		this.internService.delete(intern);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@DeleteMapping("/{id}")
+	@CrossOrigin
+	public ResponseEntity<Object> deleteById(@PathVariable() Long id) {
+		this.internService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -93,5 +103,11 @@ public class InternController {
 	@GetMapping("/byname/{name}")
 	public List<InternEntity> findByName(@PathVariable String name) {
 		return this.internService.findByName(name);
+	}
+	
+	@GetMapping("/byemail")
+	@CrossOrigin
+	public ResponseEntity<?> byEmail(@RequestParam() String email) {
+		return this.internService.byEmail(email);
 	}
 }
