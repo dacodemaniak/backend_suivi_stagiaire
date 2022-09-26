@@ -106,6 +106,7 @@ public class InternController {
 	}
 	
 	@GetMapping("/byemail")
+	@CrossOrigin
 	public ResponseEntity<?> byEmail(@RequestParam() String email) {
 		return this.internService.byEmail(email);
 	}

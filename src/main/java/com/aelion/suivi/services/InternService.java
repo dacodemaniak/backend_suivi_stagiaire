@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -155,13 +156,15 @@ public class InternService implements ICrud<InternEntity> {
 	}
 	
 	public ResponseEntity<?> byEmail(String email) {
+		ResponseEntity response = null;
+		
 		InternEntity entity =  this.repository.internByMail(email);
 		
 		if (entity == null) {
-			return ResponseEntity.notFound().build();
+			return new ResponseEntity(HttpStatus.OK);
 		}
 		
-		return ResponseEntity.ok(entity);
+		return new ResponseEntity(HttpStatus.FORBIDDEN);
 	}
 	
 	public boolean emailExists(String email) {
