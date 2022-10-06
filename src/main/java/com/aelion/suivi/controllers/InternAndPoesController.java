@@ -20,7 +20,8 @@ public class InternAndPoesController {
 	@PostMapping()
 	@CrossOrigin
 	public InternEntity add(InternInputDto input) {
-		return this.internAndPoesService.addInternAndPoes(input);
+		return null;
+		// Return a new instance of InternEntity
 	}
 	
 }
