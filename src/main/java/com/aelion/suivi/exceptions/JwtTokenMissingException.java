@@ -1,7 +1,9 @@
 package com.aelion.suivi.exceptions;
 
-public class JwtTokenMissingException extends Exception {
-	private static final long serialVersionUID = 2L;
+import org.springframework.security.core.AuthenticationException;
+
+public class JwtTokenMissingException extends AuthenticationException {
+	private static final long serialVersionUID = 1L;
 	
 	public JwtTokenMissingException(String error) {
 		super(error);
