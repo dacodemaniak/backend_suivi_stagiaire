@@ -34,7 +34,15 @@ public class UserAuthService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = this.userRepository.findByUserName(username).get();
+		Optional<User> oUser = this.userRepository.findByUserName(username);
+		
+		if (oUser.isEmpty()) {
+			throw new UsernameNotFoundException("No user was found with this credentials");
+		}
+		
+		User user = oUser.get();
+		
+		System.out.println("User was found with : " + user.getUserRoles().size() + " roles");
 		
 		// Way to convert Set to List
 		List<UserRole> roles = user.getUserRoles()

@@ -1,5 +1,6 @@
 package com.aelion.suivi.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,31 +17,34 @@ public class UserRole {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@Column
 	private String role;
 	
-	@ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@ManyToOne(fetch = FetchType.EAGER, optional=false)
 	@JoinColumn(name="user_id")
 	private User user;
-
-	public String getRole() {
-		return role;
+	
+	public int getId() {
+		return this.id;
 	}
-
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getRole() {
+		return this.role;
+	}
+	
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-	public User getUser() {
-		return user;
-	}
-
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public int getId() {
-		return id;
+	
+	public User getUser() {
+		return this.user;
 	}
-	
-	
 }

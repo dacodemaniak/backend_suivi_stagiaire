@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -20,10 +21,9 @@ import com.aelion.suivi.components.ApiAuthenticationEntryPoint;
 import com.aelion.suivi.components.JwtAuthenticationFilter;
 import com.aelion.suivi.services.UserAuthService;
 
-@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true, securedEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserAuthService userAuthService;
@@ -80,6 +80,7 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 		return registrationBean;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {

@@ -31,7 +31,7 @@ import com.aelion.suivi.services.UserService;
 
 @RequestMapping("/user")
 @RestController
-@CrossOrigin
+@CrossOrigin(value="http://localhost:4200")
 public class UserController {
 	@Autowired
 	private UserAuthService service;
